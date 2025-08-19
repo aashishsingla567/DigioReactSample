@@ -1,7 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { Digio, Environment, ServiceMode, DigioConfig } from '@digiotech/react-native';
-import type { GatewayEvent } from '@digiotech/react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {
+  Digio,
+  Environment,
+  ServiceMode,
+  DigioConfig,
+} from '@digiotech/react-native';
+import type {GatewayEvent} from '@digiotech/react-native';
 
 export default function App() {
   const [digioResult, setDigioResult] = useState<any | null>(null);
@@ -9,32 +14,29 @@ export default function App() {
   const digioRef = useRef<any>(null);
 
   useEffect(() => {
-
     const digioConfig: DigioConfig = {
-  environment: Environment.PRODUCTION,
-  serviceMode: ServiceMode.OTP,
-  logo: 'https://www.gstatic.com/mobilesdk/160503_mobilesdk/logo/2x/firebase_28dp.png',
-  theme: {
-    primaryColor: '#b03a2e',
-    secondaryColor: '#b03a2e',
-    fontFamily: '',
-    fontUrl: '',
-    fontFormat: '',
-  },
-};
-
+      environment: Environment.PRODUCTION,
+      serviceMode: ServiceMode.OTP,
+      logo: 'https://www.gstatic.com/mobilesdk/160503_mobilesdk/logo/2x/firebase_28dp.png',
+      theme: {
+        primaryColor: '#b03a2e',
+        secondaryColor: '#b03a2e',
+        fontFamily: '',
+        fontUrl: '',
+        fontFormat: '',
+      },
+    };
 
     // Initialize Digio only once
-     digioRef.current = new Digio(digioConfig);
+    digioRef.current = new Digio(digioConfig);
 
-    const digioGatewayEventSubscription = digioRef.current.addGatewayEventListener(
-      (event: GatewayEvent) => {
+    const digioGatewayEventSubscription =
+      digioRef.current.addGatewayEventListener((event: GatewayEvent) => {
         console.log('Digio_event ' + event.event);
         if (event.event !== undefined) {
           setDigioEvent(event.event);
         }
-      }
-    );
+      });
 
     return () => {
       digioGatewayEventSubscription.remove();
@@ -42,11 +44,15 @@ export default function App() {
   }, []);
 
   const startDigioFlow = () => {
+    // KID250818181740222JPAVKFQVFP4N1P
+    // GWT250818181740232CHDLHGQQUJNTQS
+    // akash.kumar@digio.in
+
     digioRef.current
       ?.start(
-        'DID250620124007254HMECCYJ5NTQZ7A',
+        'KID250818181740222JPAVKFQVFP4N1P',
         'akash.kumar@digio.in',
-        'GWT250620124007359AYAU73KH2LBGES'
+        'GWT250818181740232CHDLHGQQUJNTQS',
       )
       .then((res: any) => {
         console.log(res);
